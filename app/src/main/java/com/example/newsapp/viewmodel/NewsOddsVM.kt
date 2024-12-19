@@ -14,29 +14,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-interface NewsOddsViewModel{
+interface NewsOddsViewModel {
     val newsOddsState: StateFlow<NewsOddsState>
 
     fun getNews();
+    fun openUrl(url: String)
 }
 
 class NewsOddsVM(
-    private val newsOdds:NewsOdds
-): NewsOddsViewModel, ViewModel() {
+    private val newsOdds: NewsOdds
+) : NewsOddsViewModel, ViewModel() {
     private val _newsOddsState = MutableStateFlow(NewsOddsState())
     override val newsOddsState: StateFlow<NewsOddsState>
         get() = _newsOddsState.asStateFlow()
 
     override fun getNews() {
-
         viewModelScope.launch {
             println("NEWWWWWWWWWWWWWWWWWS:")
             val data = newsOdds.getNews()
 
-            _newsOddsState.value= newsOddsState.value.copy(newsList = data)
+            _newsOddsState.value = newsOddsState.value.copy(newsList = data)
             println("Fetched: $data")
 
         }
+    }
+
+    override fun openUrl(url: String) {
+        newsOdds.openUrlInBrowser(url)
     }
 
     companion object {
@@ -50,9 +54,10 @@ class NewsOddsVM(
 
     init {
         // Initialization code (if any)
-       getNews()
+        getNews()
     }
 }
+
 data class NewsOddsState(
     val newsList: News.NewsResponse = News.NewsResponse(emptyList())
 

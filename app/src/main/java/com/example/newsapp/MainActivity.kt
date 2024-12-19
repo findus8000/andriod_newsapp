@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NewsApp(vm: NewsOddsVM){
-    Box(modifier = Modifier.background(Color.White)){
+fun NewsApp(vm: NewsOddsVM) {
+    Box(modifier = Modifier.background(Color.White)) {
         //SensorPage(vm)
         HomePage(vm)
     }

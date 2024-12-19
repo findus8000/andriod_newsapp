@@ -16,7 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.newsapp.ui.theme.Purple80
 import com.example.newsapp.viewmodel.NewsOddsViewModel
 
 @Composable
@@ -37,7 +39,7 @@ fun HomePage(vm: NewsOddsViewModel){
             .padding(16.dp)
     ) {
         Text(
-            text = "Hello", style = MaterialTheme.typography.titleLarge
+            text = "NEWS ODDS",  style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary) // Primary color from theme
         )
 
         LazyColumn(
@@ -49,7 +51,7 @@ fun HomePage(vm: NewsOddsViewModel){
                 ) // Optional padding for spacing between the text and the list
         ) {
             items(newsOddsData.newsList.articles){newsItem ->
-               ArticleItem(newsItem)
+               ArticleItem(newsItem, vm)
             }
 
         }

@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.net.URL
 
 //87c2cab3168a4780a835da1981a7b3ca
 class News {
@@ -43,22 +44,24 @@ class News {
     )
 
     data class Articles(
-        val title:String,
-        val description:String,
-        val url:String
+        val title: String,
+        val description: String,
+        val url: String,
+        val urlToImage: String
     )
 
 
     suspend fun getNetNewsData(): NewsResponse {
         println("Getting news!")
-        val jsonPlaceholderService = RetrofitClient.retrofit.create(WeatherJsonPlaceholder::class.java)
-        try{
-                val response = jsonPlaceholderService.getNewsData()
-                //println(response)
-               return response
+        val jsonPlaceholderService =
+            RetrofitClient.retrofit.create(WeatherJsonPlaceholder::class.java)
+        try {
+            val response = jsonPlaceholderService.getNewsData()
+            //println(response)
+            return response
         } catch (e: Exception) {
-                println("Error: ${e.message}")
-                e.printStackTrace()
+            println("Error: ${e.message}")
+            e.printStackTrace()
         }
 
 
