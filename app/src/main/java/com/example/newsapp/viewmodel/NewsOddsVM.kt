@@ -7,17 +7,37 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.newsapp.NewsApplication
+import com.example.newsapp.model.News
 import com.example.newsapp.model.NewsOdds
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 interface NewsOddsViewModel{
+    val newsOddsState: StateFlow<NewsOddsState>
 
+    fun getNews();
 }
 
 class NewsOddsVM(
     private val newsOdds:NewsOdds
 ): NewsOddsViewModel, ViewModel() {
+    private val _newsOddsState = MutableStateFlow(NewsOddsState())
+    override val newsOddsState: StateFlow<NewsOddsState>
+        get() = _newsOddsState.asStateFlow()
 
+    override fun getNews() {
+
+        viewModelScope.launch {
+            println("NEWWWWWWWWWWWWWWWWWS:")
+            val data = newsOdds.getNews()
+
+            _newsOddsState.value= newsOddsState.value.copy(newsList = data)
+            println("Fetched: $data")
+
+        }
+    }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
@@ -30,9 +50,10 @@ class NewsOddsVM(
 
     init {
         // Initialization code (if any)
-        viewModelScope.launch {
-            println("NEWWWWWWWWWWWWWWWWWS:")
-            println(newsOdds.getNews())
-        }
+       getNews()
     }
 }
+data class NewsOddsState(
+    val newsList: News.NewsResponse = News.NewsResponse(emptyList())
+
+)

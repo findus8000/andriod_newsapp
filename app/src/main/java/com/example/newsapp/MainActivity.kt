@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.newsapp.ui.theme.NewsappTheme
 import com.example.newsapp.viewmodel.NewsOddsVM
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.newsapp.view.HomePage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
 fun NewsApp(vm: NewsOddsVM){
     Box(modifier = Modifier.background(Color.White)){
         //SensorPage(vm)
-        Text("YOOOOOOOOOOOOO")
+        HomePage(vm)
     }
 
 }

@@ -52,15 +52,14 @@ class News {
     suspend fun getNetNewsData(): NewsResponse {
         println("Getting news!")
         val jsonPlaceholderService = RetrofitClient.retrofit.create(WeatherJsonPlaceholder::class.java)
-
-            try {
+        try{
                 val response = jsonPlaceholderService.getNewsData()
-                println(response)
+                //println(response)
                return response
-            } catch (e: Exception) {
+        } catch (e: Exception) {
                 println("Error: ${e.message}")
                 e.printStackTrace()
-            }
+        }
 
 
         return NewsResponse(emptyList())
