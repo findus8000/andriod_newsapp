@@ -1,24 +1,31 @@
 package com.example.newsapp.model
 
-import com.google.gson.Gson
+import androidx.compose.foundation.pager.PageSize
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
 import retrofit2.http.Query
-import java.net.URL
 
-//87c2cab3168a4780a835da1981a7b3ca
+
 class News {
 
-    private val gson = Gson()
+    interface NewsJsonPlaceholder {
+        @GET("v2/top-headlines")
+        suspend fun getNewsData(
+            @Query("language") language: String = "en",
+            @Query("apiKey") apiKey: String = "87c2cab3168a4780a835da1981a7b3ca"
+        ): NewsResponse
 
-    interface WeatherJsonPlaceholder {
-        @GET("v2/top-headlines?country=us&apiKey=87c2cab3168a4780a835da1981a7b3ca")
-        suspend fun getNewsData(): NewsResponse
+        @GET("v2/everything")
+        suspend fun getNewsDataSearch(
+            @Query("q") q: String = "",
+            @Query("language") language: String = "en",
+            @Query("apiKey") apiKey: String = "87c2cab3168a4780a835da1981a7b3ca",
+            @Query("pageSize") pageSize: Int = 20,
+            @Query("sortBy") sortBy:String = "relevancy"
+        ): NewsResponse
     }
 
     object RetrofitClient {
@@ -44,27 +51,41 @@ class News {
     )
 
     data class Articles(
-        val title: String,
+        var title: String,
         val description: String,
         val url: String,
-        val urlToImage: String
+        val urlToImage: String,
+        val source:Source
     )
 
+    data class Source(
+        val id:String,
+        val name:String
+    )
 
-    suspend fun getNetNewsData(): NewsResponse {
-        println("Getting news!")
+    suspend fun getBasicNewsData(): NewsResponse {
         val jsonPlaceholderService =
-            RetrofitClient.retrofit.create(WeatherJsonPlaceholder::class.java)
+            RetrofitClient.retrofit.create(NewsJsonPlaceholder::class.java)
         try {
             val response = jsonPlaceholderService.getNewsData()
-            //println(response)
             return response
         } catch (e: Exception) {
             println("Error: ${e.message}")
             e.printStackTrace()
         }
+        return NewsResponse(emptyList())
+    }
 
-
+    suspend fun searchNewsData(string:String): NewsResponse {
+        val jsonPlaceholderService =
+            RetrofitClient.retrofit.create(NewsJsonPlaceholder::class.java)
+        try {
+            val response = jsonPlaceholderService.getNewsDataSearch(q = string)
+            return response
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            e.printStackTrace()
+        }
         return NewsResponse(emptyList())
     }
 

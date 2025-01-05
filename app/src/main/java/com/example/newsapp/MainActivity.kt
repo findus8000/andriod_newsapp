@@ -6,18 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.newsapp.ui.theme.NewsappTheme
 import com.example.newsapp.viewmodel.NewsOddsVM
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.newsapp.view.HomePage
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.newsapp.view.ArticleMarketsPage
+import com.example.newsapp.view.NewsPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +35,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NewsApp(vm: NewsOddsVM) {
-    Box(modifier = Modifier.background(Color.White)) {
-        //SensorPage(vm)
-        HomePage(vm)
-    }
+    val navController = rememberNavController()
 
+    Box(modifier = Modifier.background(Color.White)) {
+        NavHost(
+            navController = navController,
+            startDestination = "home"
+        ) {
+            composable("home") {
+                NewsPage(vm = vm, navController = navController)
+            }
+            composable(
+                route = "articleDetail/{articleTitle}/{articleSource}",
+            ) { backStackEntry ->
+                val articleTitle = backStackEntry.arguments?.getString("articleTitle")
+                val articleSource = backStackEntry.arguments?.getString("articleSource")
+                ArticleMarketsPage(vm, navController, articleTitle ?: "", articleSource ?: "")  // Pass the title to your detail screen
+            }
+        }
+    }
 }
