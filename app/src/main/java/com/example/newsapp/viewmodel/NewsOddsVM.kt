@@ -53,12 +53,24 @@ class NewsOddsVM(
     }
 
     override fun openUrl(url: String) {
-        newsOdds.openUrlInBrowser(url)
+        viewModelScope.launch {
+            try {
+                newsOdds.openUrlInBrowser(url)
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        }
     }
 
     override fun getRelatedMarkets(title: String) {
-        val markets = newsOdds.matchMarkets(title)
-        _currentMatchingMarkets.value = currentMatchingMarkets.value.copy(markets = markets)
+        viewModelScope.launch {
+            try {
+                val markets = newsOdds.matchMarkets(title)
+                _currentMatchingMarkets.value = currentMatchingMarkets.value.copy(markets = markets)
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        }
     }
 
     companion object {
@@ -71,8 +83,8 @@ class NewsOddsVM(
     }
 
     init {
-        getNews()
         viewModelScope.launch {
+            getNews()
            newsOdds.initOddsData()
         }
     }

@@ -11,11 +11,11 @@ import coil.request.ImageRequest
 
 @Composable
 fun NewsImage(imageUrl: String) {
-    val painter = // Optional: Adds a crossfade animation when the image loads
+    val painter =
         rememberAsyncImagePainter(
             ImageRequest.Builder(LocalContext.current).data(data = imageUrl)
                 .apply(block = fun ImageRequest.Builder.() {
-                    crossfade(true) // Optional: Adds a crossfade animation when the image loads
+                    crossfade(true)
                 }).build()
         )
 

@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 
 @Composable
 fun BackButton(navController: NavController,){
-    // Back button remains the same
     Row(
         modifier = Modifier
             .fillMaxWidth()

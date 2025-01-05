@@ -66,7 +66,7 @@ class NewsOdds(private val application: Application) {
             "Might", "Must", "Shall", "Should", "Will", "Would", "In", "Into",
             "By", "With", "From", "Of", "On", "At", "To", "Not", "Its", "It",
             "Their", "They", "His", "Her", "He", "She", "You", "Your", "We",
-            "Our", "My", "Says", "Said", "New", "Just", "Now", "Top", "Breaking"
+            "Our", "My", "Says", "Said", "New", "Just", "Now", "Top", "Breaking", "No"
         )
 
         val regex = """\b[A-Z][a-zA-Z0-9]*\b""".toRegex()

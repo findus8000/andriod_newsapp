@@ -104,7 +104,6 @@ fun NewsPage(vm: NewsOddsViewModel, navController: NavController) {
                     }
                 }
 
-                // Search Section
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -142,7 +141,7 @@ fun NewsPage(vm: NewsOddsViewModel, navController: NavController) {
                             isSearchVisible = !isSearchVisible
                             if (!isSearchVisible && isSearchActive) {
                                 isSearchActive = false
-                                vm.getNews() // Reset to default articles when closing search
+                                vm.getNews()
                             }
                         },
                         modifier = Modifier

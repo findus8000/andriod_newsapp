@@ -44,7 +44,6 @@ fun ArticleItem(articleItem: News.Articles,vm: NewsOddsViewModel, navController:
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
-                // Title with null check
                 articleItem.title?.let { title ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -60,7 +59,6 @@ fun ArticleItem(articleItem: News.Articles,vm: NewsOddsViewModel, navController:
                     }
                 }
 
-                // Description with null check
                 articleItem.description?.let { description ->
                     Row(
                         modifier = Modifier
@@ -84,7 +82,6 @@ fun ArticleItem(articleItem: News.Articles,vm: NewsOddsViewModel, navController:
                     }
                 }
 
-                // URL with null check
                 articleItem.url?.let { url ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
