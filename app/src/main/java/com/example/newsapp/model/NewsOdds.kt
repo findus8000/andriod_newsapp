@@ -80,7 +80,7 @@ class NewsOdds(private val application: Application) {
 
     fun matchMarkets(title:String): List<Odds.Market> {
         val titleKeyWords = extractKeywords(title)
-        Log.d("MARKET_TAG", "Keywords from title: $title, $titleKeyWords")
+        Log.d("MARKET_TAG", "Title: $title, Keywords from title: $titleKeyWords")
 
         return oddsMarkets.filter { market ->
             val marketQuestion = market.question.lowercase()

@@ -15,14 +15,14 @@ class News {
         @GET("v2/top-headlines")
         suspend fun getNewsData(
             @Query("language") language: String = "en",
-            @Query("apiKey") apiKey: String = "87c2cab3168a4780a835da1981a7b3ca"
+            @Query("apiKey") apiKey: String = "-"
         ): NewsResponse
 
         @GET("v2/everything")
         suspend fun getNewsDataSearch(
             @Query("q") q: String = "",
             @Query("language") language: String = "en",
-            @Query("apiKey") apiKey: String = "87c2cab3168a4780a835da1981a7b3ca",
+            @Query("apiKey") apiKey: String = "-",
             @Query("pageSize") pageSize: Int = 20,
             @Query("sortBy") sortBy:String = "relevancy"
         ): NewsResponse
